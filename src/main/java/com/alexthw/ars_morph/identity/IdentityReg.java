@@ -5,7 +5,6 @@ import com.alexthw.ars_morph.identity.rendering.ColorVariantProvider;
 import com.alexthw.ars_morph.identity.rendering.StarbuncleTypeProvider;
 import com.alexthw.ars_morph.identity.tick_handlers.StalkerTickHandler;
 import com.alexthw.ars_morph.identity.tick_handlers.WhirlSprigTickHandler;
-import com.hollingsworth.arsnouveau.api.entity.IDecoratable;
 import com.hollingsworth.arsnouveau.common.entity.*;
 import com.hollingsworth.arsnouveau.setup.registry.ModEntities;
 import draylar.identity.ability.AbilityRegistry;
@@ -13,25 +12,21 @@ import draylar.identity.api.IdentityTickHandlers;
 import draylar.identity.api.PlayerIdentity;
 import draylar.identity.api.variant.IdentityType;
 import draylar.identity.api.variant.TypeProvider;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.util.ObfuscationReflectionHelper;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.EntityInvulnerabilityCheckEvent;
-import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.Map;
 
 
 public class IdentityReg {
 
-    public static DeferredHolder<MobEffect, MobEffect> MORPH;
+    //public static DeferredHolder<MobEffect, MobEffect> MORPH;
 
     public static void preInit() {
         //MORPH = EFFECTS.register("morph", MorphEffect::new);
@@ -125,21 +120,6 @@ public class IdentityReg {
             if (PlayerIdentity.getIdentity(player) instanceof Starbuncle) event.setInvulnerable(true);
         }
 
-    }
-
-    public static void morphInto(Level world, ServerPlayer player, LivingEntity living) {
-        if (living == null) {
-            PlayerIdentity.updateIdentity(player, null, null);
-            return;
-        }
-        IdentityType<?> type = IdentityType.from(living);
-        if (type != null) {
-            LivingEntity morph = type.create(world);
-            if (morph instanceof IDecoratable toDeco && living instanceof IDecoratable fromDeco) {
-                toDeco.setCosmeticItem(fromDeco.getCosmeticItem());
-            }
-            PlayerIdentity.updateIdentity(player, type, morph);
-        }
     }
 
 }

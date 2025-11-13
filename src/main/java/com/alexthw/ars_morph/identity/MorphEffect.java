@@ -1,5 +1,6 @@
 package com.alexthw.ars_morph.identity;
 
+import draylar.identity.api.PlayerIdentity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -16,7 +17,7 @@ public class MorphEffect extends MobEffect {
     @Override
     public void onMobRemoved(@NotNull LivingEntity livingEntity, int amplifier, Entity.@NotNull RemovalReason reason) {
         if (livingEntity instanceof ServerPlayer player)
-            IdentityReg.morphInto(player.level(), player,null);
+            PlayerIdentity.updateIdentity(player, null, null);
         super.onMobRemoved(livingEntity, amplifier, reason);
     }
 }

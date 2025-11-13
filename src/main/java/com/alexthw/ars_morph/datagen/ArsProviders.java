@@ -1,10 +1,9 @@
 package com.alexthw.ars_morph.datagen;
 
 import com.alexthw.ars_morph.ArsMorph;
-import com.alexthw.ars_morph.glyphs.MorphEffect;
+import com.alexthw.ars_morph.glyphs.EffectMorph;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.GlyphRecipe;
 import com.hollingsworth.arsnouveau.common.datagen.GlyphRecipeProvider;
-import com.hollingsworth.arsnouveau.common.datagen.patchouli.*;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
@@ -31,7 +30,7 @@ public class ArsProviders {
 
             Path output = this.generator.getPackOutput().getOutputFolder();
 
-            recipes.add(get(MorphEffect.INSTANCE).withItem(Items.DIRT));
+            recipes.add(get(EffectMorph.INSTANCE).withItem(Items.DIRT));
 
             for (GlyphRecipe recipe : recipes) {
                 Path path = getScribeGlyphPath(output, recipe.output.getItem());
