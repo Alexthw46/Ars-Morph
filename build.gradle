@@ -8,11 +8,13 @@ plugins {
 }
 
 base {
-    version = "${minecraft_version}-${mod_version}"
+    version = mod_version
     group = 'com.alexthw.ars_morph' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-    archivesBaseName = 'ars_morph'
+    archivesName = mod_id + '-' + minecraft_version
 }
-
+if (System.getenv('BUILD_NUMBER') != null) {
+    version += "." + System.getenv('BUILD_NUMBER')
+}
 // Mojang ships Java 21 to end users in 1.21+
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 // Comment the line below if you don't need to share the source jar (e.g. if nothing needs you as a dependency)
@@ -33,7 +35,7 @@ neoForge {
 
     parchment {
         mappingsVersion = project.parchment_version
-        minecraftVersion = "1.21"
+        minecraftVersion = "1.21.1"
     }
 
     runs {
@@ -155,13 +157,14 @@ dependencies {
 
     // only need the compileOnly, the runtime dependency is handled by Ars Nouveau
     compileOnly "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
-    compileOnly "vazkii.patchouli:Patchouli:1.21-${patchouli_version}"
-    compileOnly 'com.github.glitchfiend:TerraBlender-neoforge:1.21-4.0.0.0'
+    compileOnly 'com.github.glitchfiend:TerraBlender-neoforge:1.21.1-4.1.0.8'
     compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
 
     //implementation "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
-
+    implementation "curse.maven:architectury-api-419699:5786327"
+    implementation "curse.maven:identity-fix-morph-1238155:7200507"
+    implementation "curse.maven:gabous-libs-1367332:7195722"
     // cyanide to debug worldgen, localRuntime configuration won't mark is a dependency
     // localRuntime "curse.maven:cyanide-541676:5782674"
 
@@ -171,12 +174,12 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "ArsNouveau Addon",
-                "Specification-Vendor"    : "exampleDev",
+                "Specification-Title"     : "ArsNouveau Morph Addon",
+                "Specification-Vendor"    : "alexthw",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : "${version}",
-                "Implementation-Vendor"   : "exampleDev",
+                "Implementation-Vendor"   : "alexthw",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
                 "MixinConfigs"            : "ars_morph.mixins.json"
         ])

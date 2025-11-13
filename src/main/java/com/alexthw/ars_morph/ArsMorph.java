@@ -1,6 +1,5 @@
 package com.alexthw.ars_morph;
 
-import com.alexthw.ars_morph.registry.ModRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -21,7 +20,6 @@ public class ArsMorph {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public ArsMorph(IEventBus modEventBus, ModContainer modContainer) {
-        ModRegistry.registerRegistries(modEventBus);
         ArsNouveauRegistry.registerGlyphs();
         modEventBus.addListener(this::setup);
         modEventBus.addListener(this::doClientStuff);
@@ -33,7 +31,7 @@ public class ArsMorph {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        ArsNouveauRegistry.registerSounds();
+        ArsNouveauRegistry.registerGlyphs();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
@@ -44,7 +42,6 @@ public class ArsMorph {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         // do something when the server starts
-        LOGGER.info("HELLO from server starting");
     }
 
 }
