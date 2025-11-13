@@ -161,6 +161,10 @@ dependencies {
     compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
 
+    implementation("com.alexthw.ars_elemental:ars_elemental-${minecraft_version}:${elemental_version}") { transitive = false }
+    compileOnly "com.hollingsworth.nuggets:nuggets-neoforge-1.21:${nuggets_version}"
+    compileOnly("com.alexthw.sauce:sauce-${minecraft_version}:${sauce_version}") { transitive = false }
+
     //implementation "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
     implementation "curse.maven:architectury-api-419699:5786327"
     implementation "curse.maven:identity-fix-morph-1238155:7200507"

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "ars_nouveau:amethyst_golem",
+    "ars_nouveau:alakarkinos",
+    {
+      "id": "ars_elemental:siren_entity",
+      "required": false
+    }
+  ]
+}

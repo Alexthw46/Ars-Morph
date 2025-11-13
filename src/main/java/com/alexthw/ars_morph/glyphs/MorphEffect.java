@@ -1,10 +1,13 @@
 package com.alexthw.ars_morph.glyphs;
 
+import com.alexthw.ars_morph.identity.IdentityReg;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 
@@ -25,12 +28,13 @@ public class MorphEffect extends AbstractEffect {
         return 100;
     }
 
+
     @Override
-    public void onResolve(HitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
-        super.onResolve(rayTraceResult, world, shooter, spellStats, spellContext, resolver);
-
+    public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+        super.onResolveEntity(rayTraceResult, world, shooter, spellStats, spellContext, resolver);
+        if (rayTraceResult.getEntity() instanceof LivingEntity living && shooter instanceof ServerPlayer player)
+            IdentityReg.morphInto(world, player, living);
     }
-
 
     @Nonnull
     @Override

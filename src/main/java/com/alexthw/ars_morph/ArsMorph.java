@@ -1,10 +1,12 @@
 package com.alexthw.ars_morph;
 
+import com.alexthw.ars_morph.identity.IdentityReg;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -20,9 +22,12 @@ public class ArsMorph {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public ArsMorph(IEventBus modEventBus, ModContainer modContainer) {
+        modContainer.registerConfig(ModConfig.Type.COMMON, MorphConfig.COMMON_SPEC);
+
         ArsNouveauRegistry.registerGlyphs();
         modEventBus.addListener(this::setup);
         modEventBus.addListener(this::doClientStuff);
+        IdentityReg.preInit();
         NeoForge.EVENT_BUS.register(this);
     }
 
@@ -31,7 +36,7 @@ public class ArsMorph {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        ArsNouveauRegistry.registerGlyphs();
+        IdentityReg.postInit();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

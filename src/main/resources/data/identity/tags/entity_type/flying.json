@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "ars_nouveau:bookwyrm",
+    "ars_nouveau:wixie",
+    "ars_nouveau:wilden_stalker",
+    {
+      "id": "ars_elemental:flashjack_entity",
+      "required": false
+    }
+  ]
+}
