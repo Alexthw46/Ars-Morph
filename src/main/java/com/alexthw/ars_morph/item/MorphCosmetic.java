@@ -1,4 +1,4 @@
-package com.example.an_addon.item;
+package com.alexthw.ars_morph.item;
 
 import com.hollingsworth.arsnouveau.api.entity.IDecoratable;
 import com.hollingsworth.arsnouveau.api.item.ICosmeticItem;
@@ -14,9 +14,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-public class ExampleCosmetic extends ModItem implements ICosmeticItem {
+public class MorphCosmetic extends ModItem implements ICosmeticItem {
 
-    public ExampleCosmetic(Properties properties) {
+    public MorphCosmetic(Properties properties) {
         super(properties);
     }
 

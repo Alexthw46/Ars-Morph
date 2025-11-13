@@ -1,6 +1,6 @@
-package com.example.an_addon.datagen;
+package com.alexthw.ars_morph.datagen;
 
-import com.example.an_addon.ExampleANAddon;
+import com.alexthw.ars_morph.ArsMorph;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -11,7 +11,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(modid = ExampleANAddon.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ArsMorph.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class Setup {
     public static CompletableFuture<HolderLookup.Provider> provider;
     public static PackOutput output;

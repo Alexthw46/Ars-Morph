@@ -1,4 +1,4 @@
-package com.example.an_addon;
+package com.alexthw.ars_morph;
 
 
 import net.neoforged.bus.api.SubscribeEvent;
@@ -6,7 +6,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.config.ModConfigEvent;
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
-public class ExampleConfig {
+public class MorphConfig {
 
     @SubscribeEvent
     public static void onLoad(final ModConfigEvent.Loading configEvent) {

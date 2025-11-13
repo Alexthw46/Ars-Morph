@@ -1,8 +1,8 @@
-package com.example.an_addon.datagen;
+package com.alexthw.ars_morph.datagen;
 
-import com.example.an_addon.ArsNouveauRegistry;
-import com.example.an_addon.ExampleANAddon;
-import com.example.an_addon.glyphs.TestEffect;
+import com.alexthw.ars_morph.ArsNouveauRegistry;
+import com.alexthw.ars_morph.ArsMorph;
+import com.alexthw.ars_morph.glyphs.TestEffect;
 import com.hollingsworth.arsnouveau.api.familiar.AbstractFamiliarHolder;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.api.spell.AbstractCastMethod;
@@ -31,12 +31,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import static com.example.an_addon.datagen.Setup.provider;
+import static com.alexthw.ars_morph.datagen.Setup.provider;
 import static com.hollingsworth.arsnouveau.setup.registry.RegistryHelper.getRegistryName;
 
 public class ArsProviders {
 
-    static String root = ExampleANAddon.MODID;
+    static String root = ArsMorph.MODID;
 
     public static class GlyphProvider extends GlyphRecipeProvider {
 
@@ -63,7 +63,7 @@ public class ArsProviders {
 
         @Override
         public @NotNull String getName() {
-            return "Example Glyph Recipes";
+            return "Ars Morph Glyph Recipes";
         }
     }
 
@@ -102,7 +102,7 @@ public class ArsProviders {
 
         @Override
         public @NotNull String getName() {
-            return "Example Apparatus";
+            return "Ars Morph Apparatus";
         }
     }
 
@@ -141,7 +141,7 @@ public class ArsProviders {
 
         @Override
         public @NotNull String getName() {
-            return "Example Imbuement";
+            return "Ars Morph Imbuement";
         }
 
     }
@@ -215,7 +215,7 @@ public class ArsProviders {
          */
         @Override
         public @NotNull String getName() {
-            return "Example Patchouli Datagen";
+            return "Ars Morph Patchouli Datagen";
         }
 
         @Override

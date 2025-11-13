@@ -1,6 +1,6 @@
-package com.example.an_addon;
+package com.alexthw.ars_morph;
 
-import com.example.an_addon.registry.ModRegistry;
+import com.alexthw.ars_morph.registry.ModRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -14,13 +14,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(ExampleANAddon.MODID)
-public class ExampleANAddon {
-    public static final String MODID = "an_addon";
+@Mod(ArsMorph.MODID)
+public class ArsMorph {
+    public static final String MODID = "ars_morph";
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public ExampleANAddon(IEventBus modEventBus, ModContainer modContainer) {
+    public ArsMorph(IEventBus modEventBus, ModContainer modContainer) {
         ModRegistry.registerRegistries(modEventBus);
         ArsNouveauRegistry.registerGlyphs();
         modEventBus.addListener(this::setup);

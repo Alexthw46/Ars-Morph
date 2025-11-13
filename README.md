@@ -1,6 +1,6 @@
-# Ars-Nouveau-Example-Addon
+# Ars-Morph
 
-An example repository for making an addon for Ars Nouveau! See the wiki for more info.
+A mod for Ars Nouveau! See the wiki for more info.
 
 **Getting Started**
 
