@@ -1,6 +1,6 @@
-package com.example.an_addon.registry;
+package com.alexthw.ars_morph.registry;
 
-import com.example.an_addon.item.ExampleCosmetic;
+import com.alexthw.ars_morph.item.MorphCosmetic;
 import com.hollingsworth.arsnouveau.api.sound.SpellSound;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -12,8 +12,8 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
 
-import static com.example.an_addon.ExampleANAddon.MODID;
-import static com.example.an_addon.ExampleANAddon.prefix;
+import static com.alexthw.ars_morph.ArsMorph.MODID;
+import static com.alexthw.ars_morph.ArsMorph.prefix;
 import static net.minecraft.core.registries.Registries.SOUND_EVENT;
 
 public class ModRegistry {
@@ -38,7 +38,7 @@ public class ModRegistry {
 
 
     static {
-        EXAMPLE = ITEMS.register("star_hat", () -> new ExampleCosmetic(new Item.Properties()));
+        EXAMPLE = ITEMS.register("star_hat", () -> new MorphCosmetic(new Item.Properties()));
     }
 
     static SoundEvent makeSound(@NotNull String name) {

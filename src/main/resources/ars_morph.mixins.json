@@ -1,8 +1,8 @@
 {
   "required": true,
-  "package": "com.example.an_addon.mixin",
+  "package": "com.alexthw.ars_morph.mixin",
   "compatibilityLevel": "JAVA_21",
-  "refmap": "an_addon.refmap.json",
+  "refmap": "ars_morph.refmap.json",
   "mixins": [
   ],
   "minVersion": "0.8",

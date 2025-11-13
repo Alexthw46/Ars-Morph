@@ -14,11 +14,11 @@ license="GNU Lesser General Public License v3.0"
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
 # The modid of the mod
-modId="an_addon" #mandatory
+modId="ars_morph" #mandatory
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
 version="${file.jarVersion}" #mandatory
  # A display name for the mod
-displayName="Example Ars Nouveau Addon" #mandatory
+displayName="Ars Morph" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification <here>
 #updateJSONURL="http://myurl.me/" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
@@ -35,14 +35,14 @@ Starbuncles will conquer the world.
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[mixins]]
-config="an_addon.mixins.json"
-[[dependencies.an_addon]]
+config="ars_morph.mixins.json"
+[[dependencies.ars_morph]]
 modId = "minecraft"
 versionRange = "[1.21,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.an_addon]]
+[[dependencies.ars_morph]]
 modId = "ars_nouveau"
 versionRange = "[1.21.1-5.4,)"
 ordering = "AFTER"
