@@ -11,7 +11,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(modid = ArsMorph.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ArsMorph.MODID)
 public class Setup {
     public static CompletableFuture<HolderLookup.Provider> provider;
     public static PackOutput output;

@@ -1,6 +1,5 @@
 package com.alexthw.ars_morph.identity.ability;
 
-import com.alexthw.ars_morph.MorphConfig;
 import com.hollingsworth.arsnouveau.api.spell.EntitySpellResolver;
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
@@ -9,21 +8,23 @@ import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.common.entity.Whirlisprig;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectGrow;
-import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
-import draylar.identity.ability.IdentityAbility;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.Level;
 
-public class WhirlisprigAbility<W extends Whirlisprig> extends IdentityAbility<W> {
+public class WhirlisprigAbility extends MorphBoundAbility<Whirlisprig> {
 
     final ParticleColor color = new ParticleColor(50, 250, 55);
     final Spell spell = new Spell(EffectGrow.INSTANCE, AugmentAOE.INSTANCE, AugmentAOE.INSTANCE, AugmentAOE.INSTANCE);
 
+    public WhirlisprigAbility() {
+        super(Whirlisprig.class);
+    }
+
     @Override
-    public void onUse(Player player, W w, Level level) {
+    protected void use(Player player, Whirlisprig w) {
+        Level level = player.level();
         EntitySpellResolver resolver = new EntitySpellResolver(new SpellContext(level, spell, player, new LivingCaster(player)).withColors(color));
         if (resolver.postEvent().isCanceled()) {
             return;
@@ -32,12 +33,10 @@ public class WhirlisprigAbility<W extends Whirlisprig> extends IdentityAbility<W
     }
 
     @Override
-    public int getCooldown(W entity) {
-        return MorphConfig.Common.WHIRLI_COOLDOWN.get();
+    protected void passiveTick(Player player, Whirlisprig morph, boolean used) {
+        if (!player.level().isClientSide()) {
+            player.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.JUMP, 40, 2, true, false));
+        }
     }
 
-    @Override
-    public Item getIcon() {
-        return ItemsRegistry.WHIRLISPRIG_CHARM.asItem();
-    }
 }

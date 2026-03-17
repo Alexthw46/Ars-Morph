@@ -1,28 +1,19 @@
 package com.alexthw.ars_morph.identity.ability;
 
-import com.alexthw.ars_morph.MorphConfig;
 import com.hollingsworth.arsnouveau.common.entity.Starbuncle;
-import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
-import draylar.identity.ability.IdentityAbility;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.Level;
 
-public class StarbuncleAbility<S extends Starbuncle> extends IdentityAbility<S> {
+public class StarbuncleAbility extends MorphBoundAbility<Starbuncle> {
+
+    public StarbuncleAbility() {
+        super(Starbuncle.class);
+    }
+
     @Override
-    public void onUse(Player player, S s, Level level) {
+    protected void use(Player player, Starbuncle morph) {
         player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 3000, 1, false, false, false));
     }
 
-    @Override
-    public int getCooldown(S entity) {
-        return MorphConfig.Common.STARBY_COOLDOWN.get();
-    }
-
-    @Override
-    public Item getIcon() {
-        return ItemsRegistry.STARBUNCLE_CHARM.asItem();
-    }
 }

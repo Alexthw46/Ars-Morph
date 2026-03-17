@@ -26,12 +26,12 @@ displayName="Ars Morph" #mandatory
 # A file name (in the root of the mod JAR) containing a logo for display
 #logoFile="examplemod.png" #optional
 # A text field displayed in the mod UI
-credits="A bunch of Starbuncles" #optional
+credits="A bunch of people morphed into Starbuncles" #optional
 # A text field displayed in the mod UI
-authors="Alexthw & BaileyHoll for base example, whoever forgot to change this for the rest." #optional
+authors="Alexthw" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Starbuncles will conquer the world.
+Morphed starbuncles will conquer the world.
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[mixins]]
@@ -45,5 +45,11 @@ side = "BOTH"
 [[dependencies.ars_morph]]
 modId = "ars_nouveau"
 versionRange = "[1.21.1-5.4,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.ars_morph]]
+modId = "identity2"
+versionRange = "[1.0.0,)"
 ordering = "AFTER"
 side = "BOTH"

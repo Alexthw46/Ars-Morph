@@ -1,11 +1,7 @@
 package com.alexthw.ars_morph.identity.ability;
 
-import com.alexthw.ars_morph.MorphConfig;
 import com.hollingsworth.arsnouveau.common.entity.EntityWixie;
-
-import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
-import draylar.identity.ability.IdentityAbility;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.effect.MobEffect;
@@ -13,19 +9,17 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownPotion;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class WixieAbility extends IdentityAbility<EntityWixie> {
+public class WixieAbility extends MorphBoundAbility<EntityWixie> {
 
     public static final ArrayList<Holder<MobEffect>> goodEffectTable = new ArrayList<>(Arrays.asList(
             MobEffects.SATURATION, MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED, MobEffects.DAMAGE_BOOST,
@@ -39,15 +33,19 @@ public class WixieAbility extends IdentityAbility<EntityWixie> {
             ModPotions.FREEZING_EFFECT, ModPotions.BLAST_EFFECT, ModPotions.HEX_EFFECT
     ));
 
+    public WixieAbility() {
+        super(EntityWixie.class);
+    }
+
     @Override
-    public void onUse(Player player, EntityWixie entityWixie, Level level) {
+    protected void use(Player player, EntityWixie entityWixie) {
         Holder<MobEffect> effect = (player.isCrouching() ? goodEffectTable : badEffectTable).get(player.getRandom().nextInt(badEffectTable.size()));
 
-        ThrownPotion thrownpotion = new ThrownPotion(level, player);
+        ThrownPotion thrownpotion = new ThrownPotion(player.level(), player);
         ItemStack stckToThrow = getThrownStack(effect);
         thrownpotion.setItem(stckToThrow);
         thrownpotion.shootFromRotation(player, player.getXRot(), player.getYRot(), -20.0F, 0.5F, 1.0F);
-        level.addFreshEntity(thrownpotion);
+        player.level().addFreshEntity(thrownpotion);
     }
 
     private ItemStack getThrownStack(Holder<MobEffect> effect) {
@@ -56,14 +54,4 @@ public class WixieAbility extends IdentityAbility<EntityWixie> {
         return splashStack;
     }
 
-
-    @Override
-    public int getCooldown(EntityWixie entity) {
-        return MorphConfig.Common.WIXIE_COOLDOWN.get();
-    }
-
-    @Override
-    public Item getIcon() {
-        return ItemsRegistry.WIXIE_CHARM.asItem();
-    }
 }

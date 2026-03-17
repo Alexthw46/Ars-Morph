@@ -1,125 +1,101 @@
 package com.alexthw.ars_morph.identity;
 
-import com.alexthw.ars_morph.identity.ability.*;
-import com.alexthw.ars_morph.identity.rendering.ColorVariantProvider;
-import com.alexthw.ars_morph.identity.rendering.StarbuncleTypeProvider;
-import com.alexthw.ars_morph.identity.tick_handlers.StalkerTickHandler;
-import com.alexthw.ars_morph.identity.tick_handlers.WhirlSprigTickHandler;
-import com.hollingsworth.arsnouveau.common.entity.*;
+import com.alexthw.ars_morph.identity.ability.StarbuncleAbility;
+import com.alexthw.ars_morph.identity.ability.WealdWalkerAbility;
+import com.alexthw.ars_morph.identity.ability.WhirlisprigAbility;
+import com.alexthw.ars_morph.identity.ability.WildenHunterAbility;
+import com.alexthw.ars_morph.identity.ability.WildenStalkerAbility;
+import com.alexthw.ars_morph.identity.ability.WixieAbility;
+import com.alexthw.ars_morph.identity.variant.BookwyrmVariantAdapter;
+import com.alexthw.ars_morph.identity.variant.DrygmyVariantAdapter;
+import com.alexthw.ars_morph.identity.variant.StarbuncleVariantAdapter;
+import com.alexthw.ars_morph.identity.variant.WhirlisprigVariantAdapter;
+import com.alexthw.ars_morph.identity.variant.WixieVariantAdapter;
+import com.hollingsworth.arsnouveau.common.entity.WildenStalker;
 import com.hollingsworth.arsnouveau.setup.registry.ModEntities;
-import draylar.identity.ability.AbilityRegistry;
-import draylar.identity.api.IdentityTickHandlers;
-import draylar.identity.api.PlayerIdentity;
-import draylar.identity.api.variant.IdentityType;
-import draylar.identity.api.variant.TypeProvider;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.Gabou.identity2.api.IdentityApi;
+import net.Gabou.identity2.api.ability.BuiltinIdentityAbility;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.bus.api.SubscribeEvent;
+import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.fml.ModList;
-import net.neoforged.fml.util.ObfuscationReflectionHelper;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.entity.EntityInvulnerabilityCheckEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.Map;
+/**
+ * Central registration helper for Identity2 integrations.
+ */
+public final class IdentityReg {
 
+    private IdentityReg() {
+    }
 
-public class IdentityReg {
-
-    //public static DeferredHolder<MobEffect, MobEffect> MORPH;
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public static void preInit() {
-        //MORPH = EFFECTS.register("morph", MorphEffect::new);
-        NeoForge.EVENT_BUS.register(IdentityReg.class);
+        // reserved for future use
     }
 
     public static void postInit() {
-        Map<EntityType<? extends LivingEntity>, TypeProvider<?>> variants = ObfuscationReflectionHelper.getPrivateValue(IdentityType.class, new IdentityType<>(null, 0), "VARIANT_BY_TYPE");
-        initAbilities();
-        if (variants != null) initVariants(variants);
+        // Register during common setup
+        registerAbilities();
+        registerVariantAdapters();
+        registerTickHandlers();
     }
 
-    private static void initVariants(Map<EntityType<? extends LivingEntity>, TypeProvider<?>> variants) {
+    private static void registerVariantAdapters() {
+        IdentityApi.registerVariantAdapter(ModEntities.STARBUNCLE_TYPE.get(), new StarbuncleVariantAdapter());
+        IdentityApi.registerVariantAdapter(ModEntities.WHIRLISPRIG_TYPE.get(), new WhirlisprigVariantAdapter());
+        IdentityApi.registerVariantAdapter(ModEntities.ENTITY_WIXIE_TYPE.get(), new WixieVariantAdapter());
+        IdentityApi.registerVariantAdapter(ModEntities.ENTITY_DRYGMY.get(), new DrygmyVariantAdapter());
+        IdentityApi.registerVariantAdapter(ModEntities.ENTITY_BOOKWYRM_TYPE.get(), new BookwyrmVariantAdapter());
 
-        variants.put(ModEntities.STARBUNCLE_TYPE.get(), new StarbuncleTypeProvider());
-
-        variants.put(ModEntities.WHIRLISPRIG_TYPE.get(), new ColorVariantProvider<Whirlisprig>() {
-            @Override
-            protected void setColor(Whirlisprig whirlisprig, String color) {
-                whirlisprig.getEntityData().set(Whirlisprig.COLOR, color);
-            }
-
-            @Override
-            public int getRange() {
-                return 3;
-            }
-        });
-        variants.put(ModEntities.ENTITY_DRYGMY.get(), new ColorVariantProvider<EntityDrygmy>() {
-            @Override
-            protected void setColor(EntityDrygmy drygmy, String color) {
-                drygmy.getEntityData().set(EntityDrygmy.COLOR, color);
-            }
-
-            @Override
-            public int getRange() {
-                return EntityDrygmy.COLORS.length - 1;
-            }
-        });
-        variants.put(ModEntities.ENTITY_BOOKWYRM_TYPE.get(), new ColorVariantProvider<EntityBookwyrm>() {
-
-            @Override
-            protected void setColor(EntityBookwyrm bookwyrm, String color) {
-                bookwyrm.setColor(color);
-            }
-
-            @Override
-            public int getRange() {
-                return EntityBookwyrm.COLORS.length - 1;
-            }
-
-        });
-        variants.put(ModEntities.ENTITY_WIXIE_TYPE.get(), new ColorVariantProvider<EntityWixie>() {
-
-            @Override
-            protected void setColor(EntityWixie entityWixie, String color) {
-                entityWixie.getEntityData().set(EntityWixie.COLOR, color);
-            }
-
-            @Override
-            public int getRange() {
-                return EntityWixie.COLORS.length - 1;
-            }
-        });
-
-        if (ModList.get().isLoaded("ars_elemental")) ElementalModule.variants(variants);
-
-    }
-
-
-    public static void initAbilities() {
-        AbilityRegistry.register(ModEntities.ENTITY_BLAZING_WEALD.get(), new WealdWalkerAbility<>());
-        AbilityRegistry.register(ModEntities.ENTITY_CASCADING_WEALD.get(), new WealdWalkerAbility<>());
-        AbilityRegistry.register(ModEntities.ENTITY_FLOURISHING_WEALD.get(), new WealdWalkerAbility<>());
-        AbilityRegistry.register(ModEntities.ENTITY_VEXING_WEALD.get(), new WealdWalkerAbility<>());
-        AbilityRegistry.register(ModEntities.WILDEN_HUNTER.get(), new WildenHunterAbility());
-        AbilityRegistry.register(ModEntities.WILDEN_STALKER.get(), new WildenStalkerAbility());
-
-        AbilityRegistry.register(ModEntities.STARBUNCLE_TYPE.get(), new StarbuncleAbility<>());
-        AbilityRegistry.register(ModEntities.WHIRLISPRIG_TYPE.get(), new WhirlisprigAbility<>());
-        AbilityRegistry.register(ModEntities.ENTITY_WIXIE_TYPE.get(), new WixieAbility());
-
-        IdentityTickHandlers.register(ModEntities.WHIRLISPRIG_TYPE.get(), new WhirlSprigTickHandler());
-        IdentityTickHandlers.register(ModEntities.WILDEN_STALKER.get(), new StalkerTickHandler());
-
-        if (ModList.get().isLoaded("ars_elemental")) ElementalModule.initAbilities();
-    }
-
-    @SubscribeEvent
-    public static void onLivingAttack(EntityInvulnerabilityCheckEvent event) {
-        if (event.getEntity() instanceof Player player && event.getSource() == player.damageSources().sweetBerryBush()) {
-            if (PlayerIdentity.getIdentity(player) instanceof Starbuncle) event.setInvulnerable(true);
+        // Elemental adapters are registered by ElementalModule when ars_elemental is present.
+        if (ModList.get().isLoaded("ars_elemental")) {
+            // ElementalModule may register additional abilities
+            ElementalModule.initVariants();
         }
-
     }
 
+    private static void registerAbilities() {
+        // Register by EntityType where possible - natural builtin id will be the entity type id
+        IdentityApi.registerBuiltinAbility(ModEntities.ENTITY_BLAZING_WEALD.get(), new WealdWalkerAbility());
+        IdentityApi.registerBuiltinAbility(ModEntities.ENTITY_CASCADING_WEALD.get(), new WealdWalkerAbility());
+        IdentityApi.registerBuiltinAbility(ModEntities.ENTITY_FLOURISHING_WEALD.get(), new WealdWalkerAbility());
+        IdentityApi.registerBuiltinAbility(ModEntities.ENTITY_VEXING_WEALD.get(), new WealdWalkerAbility());
+        IdentityApi.registerBuiltinAbility(ModEntities.WILDEN_HUNTER.get(), new WildenHunterAbility());
+        IdentityApi.registerBuiltinAbility(ModEntities.WILDEN_STALKER.get(), new WildenStalkerAbility());
+        IdentityApi.registerBuiltinAbility(ModEntities.STARBUNCLE_TYPE.get(), new StarbuncleAbility());
+        IdentityApi.registerBuiltinAbility(ModEntities.WHIRLISPRIG_TYPE.get(), new WhirlisprigAbility());
+        IdentityApi.registerBuiltinAbility(ModEntities.ENTITY_WIXIE_TYPE.get(), new WixieAbility());
+        if (ModList.get().isLoaded("ars_elemental")) {
+            // ElementalModule may register additional abilities
+            ElementalModule.initAbilities();
+        }
+    }
+
+    private static void registerTickHandlers() {
+        // WildenStalker: mirror flying state from host to morph (server-side)
+        IdentityApi.registerMorphTickHandler(ModEntities.WILDEN_STALKER.get(), (host, currentMorph) -> {
+            if (host.level().isClientSide()) return;
+            if (!(host instanceof ServerPlayer serverPlayer)) return; // must be server player to sync
+            try {
+                boolean flying = serverPlayer.isFallFlying() && !serverPlayer.onGround() && !serverPlayer.isInWater();
+                if (currentMorph instanceof WildenStalker stalker) {
+                    stalker.setFlying(flying);
+                }
+
+                // Sync a custom boolean key so clients (and other systems) can react if needed.
+                IdentityApi.syncBoolean(serverPlayer, "isFlying", flying);
+            } catch (Throwable t) {
+                LOGGER.error("Error in WildenStalker tick handler", t);
+            }
+        });
+    }
+
+    public static void registerAbility(ResourceLocation id, BuiltinIdentityAbility ability) {
+        IdentityApi.registerBuiltinAbility(id, ability);
+    }
 }

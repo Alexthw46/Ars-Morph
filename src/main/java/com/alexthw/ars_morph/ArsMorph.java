@@ -28,7 +28,6 @@ public class ArsMorph {
         modEventBus.addListener(this::setup);
         modEventBus.addListener(this::doClientStuff);
         IdentityReg.preInit();
-        NeoForge.EVENT_BUS.register(this);
     }
 
     public static ResourceLocation prefix(String path) {
@@ -41,12 +40,6 @@ public class ArsMorph {
 
     private void doClientStuff(final FMLClientSetupEvent event) {
 
-    }
-
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) {
-        // do something when the server starts
     }
 
 }

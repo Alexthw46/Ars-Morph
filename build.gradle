@@ -32,6 +32,7 @@ tasks.named('wrapper', Wrapper).configure {
 neoForge {
     // Specify the version of NeoForge to use.
     version = project.neo_version
+    validateAccessTransformers = true
 
     parchment {
         mappingsVersion = project.parchment_version
@@ -167,8 +168,9 @@ dependencies {
 
     //implementation "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
     implementation "curse.maven:architectury-api-419699:5786327"
-    implementation "curse.maven:identity-fix-morph-1238155:7200507"
+    implementation "curse.maven:identity-fix-morph-1238155:7767571"
     implementation "curse.maven:gabous-libs-1367332:7195722"
+
     // cyanide to debug worldgen, localRuntime configuration won't mark is a dependency
     // localRuntime "curse.maven:cyanide-541676:5782674"
 
