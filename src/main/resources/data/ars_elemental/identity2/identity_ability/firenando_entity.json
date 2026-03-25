@@ -1,0 +1,6 @@
+{
+  "icon": "ars_elemental:firenando_charm",
+  "cooldown": 120,
+  "use_duration": 40,
+  "predef": "ars_elemental:firenando_entity"
+}

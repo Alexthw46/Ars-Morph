@@ -1,0 +1,6 @@
+{
+  "icon": "ars_nouveau:wilden_wing",
+  "cooldown": 800,
+  "use_duration": 100,
+  "predef": "ars_nouveau:wilden_stalker"
+}

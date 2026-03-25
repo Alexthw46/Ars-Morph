@@ -1,0 +1,6 @@
+{
+  "icon": "ars_nouveau:wilden_horn",
+  "cooldown": 800,
+  "use_duration": 20,
+  "predef": "ars_nouveau:wilden_hunter"
+}

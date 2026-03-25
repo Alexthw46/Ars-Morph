@@ -1,0 +1,6 @@
+{
+  "icon": "ars_nouveau:whirlisprig_charm",
+  "cooldown": 100,
+  "use_duration": 20,
+  "predef": "ars_nouveau:whirlisprig"
+}

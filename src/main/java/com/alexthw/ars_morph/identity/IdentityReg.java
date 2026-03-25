@@ -16,9 +16,6 @@ import com.hollingsworth.arsnouveau.setup.registry.ModEntities;
 import net.Gabou.identity2.api.IdentityApi;
 import net.Gabou.identity2.api.ability.BuiltinIdentityAbility;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.fml.ModList;
 import org.apache.logging.log4j.LogManager;
@@ -52,28 +49,21 @@ public final class IdentityReg {
         IdentityApi.registerVariantAdapter(ModEntities.ENTITY_DRYGMY.get(), new DrygmyVariantAdapter());
         IdentityApi.registerVariantAdapter(ModEntities.ENTITY_BOOKWYRM_TYPE.get(), new BookwyrmVariantAdapter());
 
-        // Elemental adapters are registered by ElementalModule when ars_elemental is present.
-        if (ModList.get().isLoaded("ars_elemental")) {
-            // ElementalModule may register additional abilities
-            ElementalModule.initVariants();
-        }
+        // ElementalModule - Ars Elemental variant adapters
+        if (ModList.get().isLoaded("ars_elemental")) ElementalModule.initVariants();
     }
 
     private static void registerAbilities() {
         // Register by EntityType where possible - natural builtin id will be the entity type id
-        IdentityApi.registerBuiltinAbility(ModEntities.ENTITY_BLAZING_WEALD.get(), new WealdWalkerAbility());
-        IdentityApi.registerBuiltinAbility(ModEntities.ENTITY_CASCADING_WEALD.get(), new WealdWalkerAbility());
-        IdentityApi.registerBuiltinAbility(ModEntities.ENTITY_FLOURISHING_WEALD.get(), new WealdWalkerAbility());
-        IdentityApi.registerBuiltinAbility(ModEntities.ENTITY_VEXING_WEALD.get(), new WealdWalkerAbility());
+        IdentityApi.registerBuiltinAbility(ResourceLocation.fromNamespaceAndPath("ars_nouveau","weald_walker"), new WealdWalkerAbility());
+
         IdentityApi.registerBuiltinAbility(ModEntities.WILDEN_HUNTER.get(), new WildenHunterAbility());
         IdentityApi.registerBuiltinAbility(ModEntities.WILDEN_STALKER.get(), new WildenStalkerAbility());
         IdentityApi.registerBuiltinAbility(ModEntities.STARBUNCLE_TYPE.get(), new StarbuncleAbility());
         IdentityApi.registerBuiltinAbility(ModEntities.WHIRLISPRIG_TYPE.get(), new WhirlisprigAbility());
         IdentityApi.registerBuiltinAbility(ModEntities.ENTITY_WIXIE_TYPE.get(), new WixieAbility());
-        if (ModList.get().isLoaded("ars_elemental")) {
-            // ElementalModule may register additional abilities
-            ElementalModule.initAbilities();
-        }
+        // ElementalModule - register additional abilities from Ars Elemental mobs
+        if (ModList.get().isLoaded("ars_elemental")) ElementalModule.initAbilities();
     }
 
     private static void registerTickHandlers() {
@@ -86,8 +76,6 @@ public final class IdentityReg {
                 if (currentMorph instanceof WildenStalker stalker) {
                     stalker.setFlying(flying);
                 }
-
-                // Sync a custom boolean key so clients (and other systems) can react if needed.
                 IdentityApi.syncBoolean(serverPlayer, "isFlying", flying);
             } catch (Throwable t) {
                 LOGGER.error("Error in WildenStalker tick handler", t);

@@ -1,0 +1,6 @@
+{
+  "icon": "ars_nouveau:green_archwood_log",
+  "cooldown": 100,
+  "use_duration": 20,
+  "predef": "ars_nouveau:weald_walker"
+}

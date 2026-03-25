@@ -61,6 +61,5 @@ public abstract class MorphBoundAbility<T extends LivingEntity> implements Built
         // default no-op
     }
 
-    // default implementations from BuiltinIdentityAbility are sufficient for the rest
 }
 
