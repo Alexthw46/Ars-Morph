@@ -1,6 +1,6 @@
 {
   "icon": "ars_nouveau:wixie_charm",
-  "cooldown": 3600,
+  "cooldown": 200,
   "use_duration": 20,
   "predef": "ars_nouveau:wixie"
 }

@@ -168,7 +168,7 @@ dependencies {
 
     //implementation "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
     implementation "curse.maven:architectury-api-419699:5786327"
-    implementation "curse.maven:identity-fix-morph-1238155:7767571"
+    implementation "curse.maven:identity-fix-morph-1238155:8153522"
     implementation "curse.maven:gabous-libs-1367332:7195722"
 
     // cyanide to debug worldgen, localRuntime configuration won't mark is a dependency

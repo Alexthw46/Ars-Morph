@@ -55,7 +55,7 @@ public final class IdentityReg {
 
     private static void registerAbilities() {
         // Register by EntityType where possible - natural builtin id will be the entity type id
-        IdentityApi.registerBuiltinAbility(ResourceLocation.fromNamespaceAndPath("ars_nouveau","weald_walker"), new WealdWalkerAbility());
+        IdentityApi.registerBuiltinAbility(ResourceLocation.fromNamespaceAndPath("ars_nouveau", "weald_walker"), new WealdWalkerAbility());
 
         IdentityApi.registerBuiltinAbility(ModEntities.WILDEN_HUNTER.get(), new WildenHunterAbility());
         IdentityApi.registerBuiltinAbility(ModEntities.WILDEN_STALKER.get(), new WildenStalkerAbility());
@@ -72,9 +72,10 @@ public final class IdentityReg {
             if (host.level().isClientSide()) return;
             if (!(host instanceof ServerPlayer serverPlayer)) return; // must be server player to sync
             try {
-                boolean flying = serverPlayer.isFallFlying() && !serverPlayer.onGround() && !serverPlayer.isInWater();
+                boolean flying = !serverPlayer.onGround() && !serverPlayer.isInWater();
+                if (flying) flying = serverPlayer.level().getBlockState(serverPlayer.getOnPos()).isAir();
                 if (currentMorph instanceof WildenStalker stalker) {
-                    stalker.setFlying(flying);
+                        stalker.setFlying(flying);
                 }
                 IdentityApi.syncBoolean(serverPlayer, "isFlying", flying);
             } catch (Throwable t) {
