@@ -1,9 +1,18 @@
 {
   "type": "ars_nouveau:glyph",
-  "exp": 27,
+  "exp": 55,
   "inputs": [
     {
-      "item": "minecraft:dirt"
+      "item": "ars_nouveau:conjuration_essence"
+    },
+    {
+      "item": "ars_nouveau:abjuration_essence"
+    },
+    {
+      "tag": "ars_nouveau:wilden_drop"
+    },
+    {
+      "tag": "ars_nouveau:wilden_drop"
     }
   ],
   "output": {

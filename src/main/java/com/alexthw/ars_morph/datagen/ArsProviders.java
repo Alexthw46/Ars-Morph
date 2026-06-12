@@ -4,11 +4,14 @@ import com.alexthw.ars_morph.ArsMorph;
 import com.alexthw.ars_morph.glyphs.EffectMorph;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.GlyphRecipe;
 import com.hollingsworth.arsnouveau.common.datagen.GlyphRecipeProvider;
+import com.hollingsworth.arsnouveau.common.datagen.ItemTagProvider;
+import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
@@ -30,7 +33,7 @@ public class ArsProviders {
 
             Path output = this.generator.getPackOutput().getOutputFolder();
 
-            recipes.add(get(EffectMorph.INSTANCE).withItem(Items.DIRT));
+            recipes.add(get(EffectMorph.INSTANCE).withItem(ItemsRegistry.CONJURATION_ESSENCE).withItem(ItemsRegistry.ABJURATION_ESSENCE).withIngredient(Ingredient.of(ItemTagProvider.WILDEN_DROP_TAG),2));
 
             for (GlyphRecipe recipe : recipes) {
                 Path path = getScribeGlyphPath(output, recipe.output.getItem());
